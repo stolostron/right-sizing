@@ -1,0 +1,317 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: prometheus-rules
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: prometheus-rules-policy
+      spec:
+        remediationAction: inform
+        severity: low
+        namespaceSelector:
+          include:
+            - openshift-monitoring
+        object-templates:
+        - complianceType: mustonlyhave
+          objectDefinition:
+            apiVersion: monitoring.coreos.com/v1
+            kind: PrometheusRule
+            metadata:
+              name: acm-right-sizing-rules
+              namespace: openshift-monitoring
+            spec:
+              groups:
+                - name: acm-right-sizing-namespace-5m.rule
+                  interval: 5m
+                  rules:
+                    - record: "acm_rs:namespace:cpu_request_hard:5m"
+                      expr: >
+                        max_over_time(
+                          sum(
+                            kube_resourcequota{
+                              resource=~"requests.cpu",
+                              type="hard",
+                              namespace!~'openshift.*|xyz.*'
+                            } * on (namespace) group_left()
+                            (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                          ) by (namespace)
+                          [5m:]
+                        )
+                    - record: "acm_rs:namespace:cpu_request:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                kube_pod_container_resource_requests{
+                                    namespace!~'openshift.*|xyz.*', 
+                                    container!='',
+                                    resource='cpu',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (namespace)
+                            [5m:]
+                        )
+                    - record: "acm_rs:namespace:cpu_usage:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{
+                                    namespace!~'openshift.*',
+                                    container!='',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (namespace)
+                            [5m:]
+                        )
+                    - record: "acm_rs:namespace:memory_request_hard:5m"
+                      expr: >
+                        max_over_time(
+                          sum(
+                            kube_resourcequota{
+                              resource=~"requests.memory",
+                              type="hard",
+                              namespace!~'openshift.*|xyz.*'
+                            } * on (namespace) group_left()
+                            (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                          ) by (namespace)
+                          [5m:]
+                        )
+                    - record: "acm_rs:namespace:memory_request:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                kube_pod_container_resource_requests{
+                                    namespace!~'openshift.*|xyz.*', 
+                                    container!='',
+                                    resource='memory',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (namespace)
+                            [5m:]
+                        )
+                    - record: "acm_rs:namespace:memory_usage:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                container_memory_working_set_bytes{
+                                    namespace!~'openshift.*',
+                                    container!='',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (namespace)
+                            [5m:]
+                        )
+                - name: acm-right-sizing-namespace-1d.rules
+                  interval: 15m
+                  rules:
+                    - record: "acm_rs:namespace:cpu_request_hard"
+                      expr: >
+                        max_over_time(
+                          acm_rs:namespace:cpu_request_hard:5m[1d]
+                          )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:namespace:cpu_request"
+                      expr: >
+                        max_over_time(
+                            acm_rs:namespace:cpu_request:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:namespace:cpu_usage"
+                      expr: >
+                        max_over_time(
+                            acm_rs:namespace:cpu_usage:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:namespace:cpu_recommendation"
+                      expr: >
+                        (max_over_time(acm_rs:namespace:cpu_usage{profile="Max OverAll"}[1d]) * (1 + (10/100)))
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:namespace:memory_request_hard"
+                      expr: >
+                        max_over_time(
+                          acm_rs:namespace:memory_request_hard:5m[1d]
+                          )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:namespace:memory_request"
+                      expr: >
+                        max_over_time(
+                            acm_rs:namespace:memory_request:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:namespace:memory_usage"
+                      expr: >
+                        max_over_time(
+                            acm_rs:namespace:memory_usage:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:namespace:memory_recommendation"
+                      expr: >
+                        (max_over_time(acm_rs:namespace:memory_usage{profile="Max OverAll"}[1d]) * (1 + (10/100)))
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                - name: acm-right-sizing-cluster-5m.rule
+                  interval: 5m
+                  rules:
+                    - record: "acm_rs:cluster:cpu_request_hard:5m"
+                      expr: >
+                        max_over_time(
+                          sum(
+                            kube_resourcequota{
+                              resource=~"requests.cpu",
+                              type="hard",
+                              namespace!~'openshift.*|xyz.*'
+                            } * on (namespace) group_left()
+                            (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                          ) by (cluster)
+                          [5m:]
+                        )
+                    - record: "acm_rs:cluster:cpu_request:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                kube_pod_container_resource_requests{
+                                    namespace!~'openshift.*|xyz.*', 
+                                    container!='',
+                                    resource='cpu',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (cluster)
+                            [5m:]
+                        )
+                    - record: "acm_rs:cluster:cpu_usage:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{
+                                    namespace!~'openshift.*',
+                                    container!='',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (cluster)
+                            [5m:]
+                          )
+                    - record: "acm_rs:cluster:memory_request_hard:5m"
+                      expr: >
+                        max_over_time(
+                          sum(
+                            kube_resourcequota{
+                              resource=~"requests.memory",
+                              type="hard",
+                              namespace!~'openshift.*|xyz.*'
+                            } * on (namespace) group_left()
+                            (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                          ) by (cluster)
+                          [5m:]
+                        )
+                    - record: "acm_rs:cluster:memory_request:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                kube_pod_container_resource_requests{
+                                    namespace!~'openshift.*|xyz.*', 
+                                    container!='',
+                                    resource='memory',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (cluster)
+                            [5m:]
+                        )
+                    - record: "acm_rs:cluster:memory_usage:5m"
+                      expr: >
+                        max_over_time(
+                            sum(
+                                container_memory_working_set_bytes{
+                                    namespace!~'openshift.*',
+                                    container!='',
+                                }
+                                * on (namespace) group_left()
+                                (kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})
+                            ) by (cluster)
+                            [5m:]
+                        )
+                - name: acm-right-sizing-cluster-1d.rule
+                  interval: 15m
+                  rules:
+                    - record: "acm_rs:cluster:cpu_request_hard"
+                      expr: >
+                        max_over_time(acm_rs:cluster:cpu_request_hard:5m[1d])
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:cluster:cpu_request"
+                      expr: >
+                        max_over_time(
+                            acm_rs:cluster:cpu_request:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:cluster:cpu_usage"
+                      expr: >
+                        max_over_time(
+                            acm_rs:cluster:cpu_usage:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:cluster:cpu_recommendation"
+                      expr: >
+                        (max_over_time(acm_rs:cluster:cpu_usage{profile="Max OverAll"}[1d]) * (1 + (10/100)))
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:cluster:memory_request_hard"
+                      expr: >
+                        max_over_time(acm_rs:cluster:memory_request_hard:5m[1d])
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:cluster:memory_request"
+                      expr: >
+                        max_over_time(
+                            acm_rs:cluster:memory_request:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:cluster:memory_usage"
+                      expr: >
+                        max_over_time(
+                            acm_rs:cluster:memory_usage:5m[1d]
+                        )
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
+                    - record: "acm_rs:cluster:memory_recommendation"
+                      expr: >
+                        (max_over_time(acm_rs:cluster:memory_usage{profile="Max OverAll"}[1d]) * (1 + (10/100)))
+                      labels:
+                        aggregation: 1d
+                        profile: Max OverAll
