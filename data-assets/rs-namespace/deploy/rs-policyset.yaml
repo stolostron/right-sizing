@@ -1,0 +1,44 @@
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: PolicySet
+metadata:
+  name: rs-policyset
+  namespace: default
+spec:
+  description: Right Sizing Policy Set
+  policies:
+    - allowlist-policy
+    - prometheus-rules
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: rs-policyset-binding
+  namespace: default
+placementRef:
+  name: rs-clusters-placement
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+subjects:
+  - name: rs-policyset
+    apiGroup: policy.open-cluster-management.io
+    kind: PolicySet
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: rs-clusters-placement
+  namespace: default
+spec:
+  tolerations:
+    - key: cluster.open-cluster-management.io/unreachable
+      operator: Exists
+    - key: cluster.open-cluster-management.io/unavailable
+      operator: Exists
+  clusterSets:
+    - rs-cluster-set # Referencing the ManagedClusterSet
+  clusterConditions: 
+    - type: ManagedClusterConditionAvailable
+      status: "True"
+    - type: ManagedClusterConditionHubAccepted
+      status: "True"
+---
