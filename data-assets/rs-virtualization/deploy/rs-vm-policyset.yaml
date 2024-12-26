@@ -1,0 +1,44 @@
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: PolicySet
+metadata:
+  name: rs-vm-policyset
+  namespace: default
+spec:
+  description: Right Sizing Virtualization Policy Set
+  policies:
+    - allowlist-policy
+    - prometheus-rules
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: rs-vm-policyset-binding
+  namespace: default
+placementRef:
+  name: rs-vm-clusters-placement
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+subjects:
+  - name: rs-vm-policyset
+    apiGroup: policy.open-cluster-management.io
+    kind: PolicySet
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: rs-vm-clusters-placement
+  namespace: default
+spec:
+  tolerations:
+    - key: cluster.open-cluster-management.io/unreachable
+      operator: Exists
+    - key: cluster.open-cluster-management.io/unavailable
+      operator: Exists
+  clusterSets:
+    - rs-vm-cluster-set # Referencing the ManagedClusterSet
+  clusterConditions: 
+    - type: ManagedClusterConditionAvailable
+      status: "True"
+    - type: ManagedClusterConditionHubAccepted
+      status: "True"
+---

@@ -1,0 +1,58 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: vm-allowlist-policy
+  namespace: open-cluster-management-policies
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: observability-metrics-custom-allowlist-namespace-policy
+      spec:
+        remediationAction: enforce
+        severity: low
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: open-cluster-management-addon-observability
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: observability-metrics-custom-allowlist-configmap-policy
+      spec:
+        remediationAction: enforce
+        severity: low
+        namespaceSelector:
+          include:
+            - open-cluster-management-addon-observability
+        object-templates:
+        - complianceType: mustonlyhave
+          objectDefinition:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: observability-metrics-custom-allowlist
+              namespace: open-cluster-management-addon-observability
+            data:
+              metrics_list.yaml: |
+                names:
+                  - acm_rs_vm:namespace:cpu_request
+                  - acm_rs_vm:namespace:cpu_usage
+                  - acm_rs_vm:namespace:memory_request
+                  - acm_rs_vm:namespace:memory_usage
+                  - acm_rs_vm:namespace:cpu_recommendation
+                  - acm_rs_vm:namespace:memory_recommendation
+                  - acm_rs_vm:cluster:cpu_request
+                  - acm_rs_vm:cluster:cpu_usage
+                  - acm_rs_vm:cluster:memory_request
+                  - acm_rs_vm:cluster:memory_usage
+                  - acm_rs_vm:cluster:cpu_recommendation
+                  - acm_rs_vm:cluster:memory_recommendation
