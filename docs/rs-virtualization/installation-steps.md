@@ -5,9 +5,9 @@
 - [MCO](https://github.com/stolostron/multicluster-observability-operator/) should be installed into the hub cluster with latest version. 
 - `oc` CLI should be installed and configured to interact with Openshift cluster
 
-# Steps to Enable Right Sizing Vistualization 
+# Steps to Enable Right Sizing Virtualization 
 
-For enabling Right Sizing Vistualization, we need to add Prometheus recording rule as well as [custom allowlist](https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.10/html-single/observability/index#creating-custom-rules) to each managed clusters.     
+For enabling Right Sizing Virtualization, we need to add Prometheus recording rule as well as [custom allowlist](https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.10/html-single/observability/index#creating-custom-rules) to each managed clusters.     
 
 ## Step 1: Login into Openshift Cluster
 From the terminal, login into ACM hub cluster environment using login command. You can easily get it form the Hub cluster Console UI.  
@@ -91,4 +91,4 @@ oc create -f data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_dashbo
 ```
 
 ## Step 6: Access Grafana Dashboard
-Wait for some time for the Prometheus Recording Rules for Vistualization to get triggered, and we will have some data points. You can then go to Grafana and search for the `ACM Right-Sizing Namespace` dashboard. Click on it, and you are ready to use Right Sizing for Virtualization solution.
+Wait for some time for the Prometheus Recording Rules for Virtualization to get triggered, and we will have some data points. You can then go to Grafana and search for the `ACM Right Sizing Virtualization` dashboard. Click on it, and you are ready to use Right Sizing for Virtualization solution.
