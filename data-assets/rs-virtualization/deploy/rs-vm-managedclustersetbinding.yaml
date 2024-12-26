@@ -1,0 +1,16 @@
+apiVersion: cluster.open-cluster-management.io/v1beta2
+kind: ManagedClusterSet
+metadata:
+  name: rs-vm-cluster-set
+spec:
+  clusterSelector:
+    selectorType: ExclusiveClusterSetLabel
+---
+apiVersion: cluster.open-cluster-management.io/v1beta2
+kind: ManagedClusterSetBinding
+metadata:
+  namespace: default
+  name: rs-vm-cluster-set # This must match the ManagedClusterSet name
+spec:
+  clusterSet: rs-vm-cluster-set # Reference to the ManagedClusterSet
+---
