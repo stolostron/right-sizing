@@ -1,7 +1,8 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: prometheus-rules
+  name: rs-prometheus-rules
+  namespace: policies
 spec:
   remediationAction: enforce
   disabled: false

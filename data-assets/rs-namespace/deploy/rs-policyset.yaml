@@ -2,20 +2,20 @@ apiVersion: policy.open-cluster-management.io/v1beta1
 kind: PolicySet
 metadata:
   name: rs-policyset
-  namespace: default
+  namespace: policies
 spec:
   description: Right Sizing Policy Set
   policies:
-    - allowlist-policy
-    - prometheus-rules
+    - rs-allowlist-policy
+    - rs-prometheus-rules
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: rs-policyset-binding
-  namespace: default
+  namespace: policies
 placementRef:
-  name: rs-clusters-placement
+  name: rs-placement
   apiGroup: cluster.open-cluster-management.io
   kind: Placement
 subjects:
@@ -26,19 +26,19 @@ subjects:
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: rs-clusters-placement
-  namespace: default
+  name: rs-placement
+  namespace: policies
 spec:
+  predicates: []
   tolerations:
     - key: cluster.open-cluster-management.io/unreachable
       operator: Exists
     - key: cluster.open-cluster-management.io/unavailable
       operator: Exists
-  clusterSets:
-    - rs-cluster-set # Referencing the ManagedClusterSet
-  clusterConditions: 
+  clusterConditions:
     - type: ManagedClusterConditionAvailable
       status: "True"
     - type: ManagedClusterConditionHubAccepted
       status: "True"
 ---
+

@@ -1,7 +1,8 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: allowlist-policy
+  name: rs-allowlist-policy
+  namespace: policies
 spec:
   remediationAction: enforce
   disabled: false
