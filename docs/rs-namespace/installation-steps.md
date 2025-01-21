@@ -16,18 +16,10 @@ oc login --token=*** --server=***
 ```
 
 ## Step 2: Setup ManagedClusterSetBinding
-We need a **ManagedClusterSet** and a **ManagedClusterSetBinding** to ensure that the `Placement` can select clusters. If you already have these, you can skip this step (you can use the existing ManagedClusterSet in **Step 4**). Otherwise, you can create a ManagedClusterSet and bind it to the `default` namespace using the command below.    
+We will be using the  `global` **ManagedClusterSet** and setting **ManagedClusterSetBinding** with the `policies` namespace using the command below.    
 ```
 oc apply -f data-assets/rs-namespace/deploy/rs-managedclustersetbinding.yaml
 ```
-
-### Assign Clusters to the ManagedClusterSet
-You can assign multiple clusters to the created ManagedClusterSet either through the ACM UI by navigating to `/multicloud/infrastructure/clusters/sets/details/rs-cluster-set/manage-resources` after the host URL, or by using the sample command below. 
-```
-for cluster in $(echo "local-cluster,cluster2,cluster3" | tr ',' ' '); do oc label managedcluster "$cluster" cluster.open-cluster-management.io/clusterset=rs-cluster-set --overwrite; done
-```
-* Replace `rs-cluster-set` if you are using any existing ManagedClusterSet.
-* Also update list of comma separated clusters in above command `local-cluster,cluster2,cluster3`.  
 
 ## Step 3: Deploy Policy 
 We will utilize [Policy](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.10/html/governance/governance#policy-overview) to deploy **Recording rule** as well as **custom allowlist** to each managed clusters. 
@@ -52,29 +44,28 @@ Now, apply the [Policy Configurations](../../data-assets/rs-namespace/deploy/rs-
 ```
 oc apply -f data-assets/rs-namespace/deploy/rs-policyset.yaml
 ```
+Currently, it applies to all managed clusters. You can customize it based on your needs.
 
 **Notes**:
-* You can change the `clusterSet` if you want to use any existing ManagedClusterSet. 
 * There are different ways to filter specific clusters that are part of the created ManagedClusterSet. Use the sample configurations below along with the `clusterSets` configuration in the `Placement` to achieve the same. 
   * We can use **predicates** in the `Placement` to filter only a few clusters from the ManagedClusterSet based on labels: 
     ```
-      predicates:
-        - requiredClusterSelector:
-            labelSelector:
-              matchLabels:
-                environment: dev   # Select clusters with this label
+    predicates:
+      - requiredClusterSelector:
+          labelSelector:
+            matchExpressions:
+              - key: "right-sizing"
+                operator: In
+                values:
+                  - "true"
     ```
-    In the example above, we are selecting only the clusters labeled `environment: dev`
-  * we can also use **clusterSelector** to select managed clusters based on label expressions. See the example below:
+    In the example above, we are selecting only the clusters labeled with `right-sizing=true`
+
+    You can use below script to assign specific label to clusters. Update list of comma separated clusters in above command `local-cluster,cluster2,cluster3`   
     ```
-    clusterSelector:                            
-        matchExpressions:
-          - key: hive.openshift.io/managed
-            operator: In
-            values:
-              - true
+    for cluster in $(echo "local-cluster,cluster2,cluster3" | tr ',' ' '); do oc label managedcluster "$cluster" right-sizing=true --overwrite; done
     ```
-    In this example, we define that only clusters with the label `hive.openshift.op/managed=true` will have the policy applied.
+
   * You can also use **clusterConditions** to filter only few managed clusters based on their status:
     ```
     clusterConditions:
