@@ -1,7 +1,7 @@
 # ACM Right Sizing at Virtualization level
 
 Below is the screenshot of ACM Right Sizing grafana dashboard at Virtualization level. 
-![ACM Right Sizing Virtualization Grafana dashboard](../../data-assets/rs-virtualization/images/vm-grafana-overview.png)
+![ACM Right Sizing Virtualization Grafana dashboard](../../data-assets/rs-virtualization/images/vm_main_view.png)
 
 * In Virtualization, we provide data at pod level (VM Name) compared to ACM Right Sizing at namespace level.
 * Overall we have 3 levels of data: cluster, namespace and pod level.
@@ -11,6 +11,7 @@ Below is the screenshot of ACM Right Sizing grafana dashboard at Virtualization 
 * Memory Usage: `kubevirt_vmi_memory_available_bytes` - `kubevirt_vmi_memory_usable_bytes`
 * CPU Request: `kubevirt_vm_resource_requests{resource="cpu"}`
 * Memory Request: `kubevirt_vm_resource_requests{resource="memory"}`
+* VM running status: `kubevirt_vm_running_status_last_transition_timestamp_seconds`
 
 # Installation Steps 
 

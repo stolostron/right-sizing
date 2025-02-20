@@ -11,7 +11,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: observability-metrics-custom-allowlist-namespace-policy
+        name: rs-allowlist-policy-namespace
       spec:
         remediationAction: enforce
         severity: low
@@ -26,7 +26,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: observability-metrics-custom-allowlist-configmap-policy
+        name: rs-allowlist-policy-configmap
       spec:
         remediationAction: enforce
         severity: low
@@ -34,7 +34,7 @@ spec:
           include:
             - open-cluster-management-addon-observability
         object-templates:
-        - complianceType: mustonlyhave
+        - complianceType: musthave
           objectDefinition:
             apiVersion: v1
             kind: ConfigMap

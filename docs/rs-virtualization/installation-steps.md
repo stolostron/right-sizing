@@ -16,18 +16,10 @@ oc login --token=*** --server=***
 ```
 
 ## Step 2: Setup ManagedClusterSetBinding
-We need a **ManagedClusterSet** and a **ManagedClusterSetBinding** to ensure that the `Placement` can select clusters. If you already have these, you can skip this step (you can use the existing ManagedClusterSet in **Step 4**). Otherwise, you can create a ManagedClusterSet and bind it to the `default` namespace using the command below.    
+We will be using the `global` **ManagedClusterSet** and setting **ManagedClusterSetBinding** with the `policies` namespace using the command below.   
 ```
 oc apply -f data-assets/rs-virtualization/deploy/rs-vm-managedclustersetbinding.yaml
 ```
-
-### Assign Clusters to the ManagedClusterSet
-You can assign multiple clusters to the created ManagedClusterSet either through the ACM UI by navigating to `/multicloud/infrastructure/clusters/sets/details/rs-vm-cluster-set/manage-resources` after the host URL, or by using the sample command below. 
-```
-for cluster in $(echo "local-cluster,cluster2,cluster3" | tr ',' ' '); do oc label managedcluster "$cluster" cluster.open-cluster-management.io/clusterset=rs-vm-cluster-set --overwrite; done
-```
-* Replace `rs-vm-cluster-set` if you are using any existing ManagedClusterSet.
-* Also update list of comma separated clusters in above command `local-cluster,cluster2,cluster3`.  
 
 ## Step 3: Deploy Policy 
 We will utilize [Policy](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.10/html/governance/governance#policy-overview) to deploy the **recording rules** as well as **custom allowlist** to each managed clusters. 
@@ -52,43 +44,73 @@ Now, apply the [Policy Configurations](../../data-assets/rs-virtualization/deplo
 ```
 oc apply -f data-assets/rs-virtualization/deploy/rs-vm-policyset.yaml
 ```
+Currently, it applies to all managed clusters. You can customize it based on your needs.
 
 **Notes**:
-* You can change the `clusterSet` if you want to use any existing ManagedClusterSet. 
 * There are different ways to filter specific clusters that are part of the created ManagedClusterSet. Use the sample configurations below along with the `clusterSets` configuration in the `Placement` to achieve the same. 
   * We can use **predicates** in the `Placement` to filter only a few clusters from the ManagedClusterSet based on labels: 
     ```
       predicates:
-        - requiredClusterSelector:
-            labelSelector:
-              matchLabels:
-                environment: dev   # Select clusters with this label
+      - requiredClusterSelector:
+          labelSelector:
+            matchExpressions:
+              - key: "vm-right-sizing"
+                operator: In
+                values:
+                  - "true"
     ```
-    In the example above, we are selecting only the clusters labeled `environment: dev`
-  * we can also use **clusterSelector** to select managed clusters based on label expressions. See the example below:
+    In the example above, we are selecting only the clusters labeled with `vm-right-sizing=true`
+
+    You can use below script to assign specific label to clusters. Update list of comma separated clusters in above command `local-cluster,cluster2,cluster3`
     ```
-    clusterSelector:                            
-        matchExpressions:
-          - key: hive.openshift.io/managed
-            operator: In
-            values:
-              - true
+    for cluster in $(echo "local-cluster,cluster2,cluster3" | tr ',' ' '); do oc label managedcluster "$cluster" vm-right-sizing=true --overwrite; done
     ```
     In this example, we define that only clusters with the label `hive.openshift.op/managed=true` will have the policy applied.
-  * You can also use **clusterConditions** to filter only few managed clusters based on their status:
+
+    You can also use **clusterConditions** to filter only few managed clusters based on their status:
     ```
     clusterConditions:
     - status: "True"
       type: ManagedClusterConditionAvailable
     ```
-    In this example, we are selecting all the managed clusters where the `ManagedClusterConditionAvailable` status is `True`.
 
 ## Step 5: Deploy Grafana Dashboard
-[Here](../../data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_dashboard.yaml) is the yaml file that contains configuration of ACM Right-Sizing grafana dashboard. Use the following command to add this dashboard on Grafana. 
+[Here](../../data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_main_dashboard.yaml) is the yaml files that contains configuration of ACM Right-Sizing grafana dashboard. Use the following command to add this dashboard on Grafana. 
 
 ```
-oc create -f data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_dashboard.yaml
+oc create -f data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_main_dashboard.yaml
 ```
 
 ## Step 6: Access Grafana Dashboard
-Wait for some time for the Prometheus Recording Rules for Virtualization to get triggered, and we will have some data points. You can then go to Grafana and search for the `ACM Right Sizing Virtualization` dashboard. Click on it, and you are ready to use Right Sizing for Virtualization solution.
+You can then go to Grafana and search for the `ACM Right Sizing Openshift Virtualization Dashboard` dashboard. Click on it to view the main dashboard. Copy the URL of the Dashboard.
+
+## Step 7: Set-Up VM Level Detailed View Dashboards
+Update [Overutilized](../../data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_overestimation_dashboard.yaml) and [Underutilized](../../data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_underestimation_dashboard.yaml) Grafana Dashboard config file with the Main Dashboard URL.
+
+```
+"links": [
+        {
+          "asDropdown": false,
+          "icon": "dashboard",
+          "includeVars": false,
+          "keepTime": false,
+          "tags": [],
+          "targetBlank": false,
+          "title": "Back to Main Dashboard",
+          "tooltip": "",
+          "type": "link",
+          "url": "<Main Dashboard URL>"
+        }
+      ],
+```
+## Step 8: Deploy VM level detailed View Grafana Dashboards
+[There](../../data-assets/rs-virtualization/deploy/) are yaml files that contains configuration of ACM Right-Sizing Overestimation and Underestimation grafana dashboard. Use the following commands to add this dashboard on Grafana. 
+
+```
+oc create -f data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_overestimation_dashboard.yaml
+
+oc create -f data-assets/rs-virtualization/deploy/vm_right_sizing_grafana_underestimation_dashboard.yaml
+```
+
+## Step 9: All set to access Grafana Dashboard
+Wait for some time for the Prometheus Recording Rules for Virtualization to get triggered, and we will have some data points. You can then go to Grafana and search for the `ACM Right Sizing Openshift Virtualization Dashboard` dashboard.

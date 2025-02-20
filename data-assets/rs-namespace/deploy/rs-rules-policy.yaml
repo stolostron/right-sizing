@@ -19,7 +19,7 @@ spec:
           include:
             - openshift-monitoring
         object-templates:
-        - complianceType: mustonlyhave
+        - complianceType: musthave
           objectDefinition:
             apiVersion: monitoring.coreos.com/v1
             kind: PrometheusRule
