@@ -21,8 +21,10 @@ We will be using the  `global` **ManagedClusterSet** and setting **ManagedCluste
 oc apply -f data-assets/rs-namespace/deploy/rs-managedclustersetbinding.yaml
 ```
 
-## Step 3: Deploy Policy 
+## Step 3: Deploy Policy
 We will utilize [Policy](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.10/html/governance/governance#policy-overview) to deploy **Recording rule** as well as **custom allowlist** to each managed clusters. 
+
+### Recording Rule Policy
 
 We have created sample policy for the Prometheus Recording Rule, you can find it [here](../../data-assets/rs-namespace/deploy/rs-rules-policy.yaml). Using below command you can deploy policy to Hub cluster.  
 ```
@@ -34,16 +36,36 @@ You can customize the cluster/namespace filter criteria based on need. Below are
 - `namespace!~'openshift.*|xyz.*'`
 - `(kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})`
 
-Similar way you can deploy custom allowlist policy, you can find sample [here](../../data-assets/rs-namespace/deploy/rs-allowlist-policy.yaml)
+### Custom allowlist Policy
+
+If you are using Right Sizing at **Namespace Level only**:
+you can find sample [here](../../data-assets/rs-namespace/deploy/rs-allowlist-policy.yaml)
 ```
 oc apply -f data-assets/rs-namespace/deploy/rs-allowlist-policy.yaml
 ```
 
+If you are using Right Sizing at **Namespace Level as well as Virtualization VM Level**.
+you can find sample [here](../../data-assets/common/deploy/rs-allowlist-policy.yaml)
+```
+oc apply -f data-assets/common/deploy/rs-allowlist-policy.yaml
+```
+
+**Note**:
+If you already have few metrics that are part of  `observability-metrics-custom-allowlist` then please update existing Policy configuration by adding those metrics to `rs-allowlist-policy.yaml`, so you can have existing metrics as well as metrics required for namespace/vm.
+
 ## Step 4: Adding Policies to PolicySet
-Now, apply the [Policy Configurations](../../data-assets/rs-namespace/deploy/rs-policyset.yaml) using the command below to enable these policies across the fleet. This will include the PolicySet, PlacementBinding, and Placement.
+### If you are using Right Sizing at Namespace Level only:
+Apply the [Policy Configurations](../../data-assets/rs-namespace/deploy/rs-policyset.yaml) using the command below to enable these policies across the fleet. This will include the PolicySet, PlacementBinding, and Placement.
 ```
 oc apply -f data-assets/rs-namespace/deploy/rs-policyset.yaml
 ```
+
+### If you are using Right Sizing at Namespace Level as well as Virtualization VM Level.
+Apply the [Policy Configurations](../../data-assets/common/deploy/rs-policyset.yaml) using the command below to enable these policies across the fleet. This will include the PolicySet, PlacementBinding, and Placement.
+```
+oc apply -f data-assets/common/deploy/rs-policyset.yaml
+```
+
 Currently, it applies to all managed clusters. You can customize it based on your needs.
 
 **Notes**:
