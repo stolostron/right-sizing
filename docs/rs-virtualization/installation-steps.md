@@ -34,16 +34,32 @@ You can customize the cluster/namespace filter criteria based on need. Below are
 - `namespace!~'openshift.*|xyz.*'`
 - `(kube_namespace_labels{label_env=~"prod|dev"} or kube_namespace_labels{label_env=''})`
 
-Similar way you can deploy custom allowlist policy, you can find sample [here](../../data-assets/rs-virtualization/deploy/rs-vm-allowlist-policy.yaml)
+### Similar way you can deploy custom allowlist policy
+### If you are using Right Sizing at Virtualization VM Level only:
+you can find sample [here](../../data-assets/rs-virtualization/deploy/rs-vm-allowlist-policy.yaml)
 ```
 oc apply -f data-assets/rs-virtualization/deploy/rs-vm-allowlist-policy.yaml
 ```
 
+### If you are using Right Sizing at Namespace Level as well as Virtualization VM Level.
+you can find sample [here](../../data-assets/rs-allowlist-policy.yaml)
+```
+oc apply -f data-assets/rs-allowlist-policy.yaml
+```
+
 ## Step 4: Adding Policies to PolicySet
-Now, apply the [Policy Configurations](../../data-assets/rs-virtualization/deploy/rs-vm-policyset.yaml) using the command below to enable these policies across the fleet. This will include the PolicySet, PlacementBinding, and Placement.
+### If you are using Right Sizing at Virtualization VM Level only:
+Apply the [Policy Configurations](../../data-assets/rs-virtualization/deploy/rs-vm-policyset.yaml) using the command below to enable these policies across the fleet. This will include the PolicySet, PlacementBinding, and Placement.
 ```
 oc apply -f data-assets/rs-virtualization/deploy/rs-vm-policyset.yaml
 ```
+
+### If you are using Right Sizing at Namespace Level as well as Virtualization VM Level.
+Apply the [Policy Configurations](../../data-assets/rs-policyset.yaml) using the command below to enable these policies across the fleet. This will include the PolicySet, PlacementBinding, and Placement.
+```
+oc apply -f data-assets/rs-policyset.yaml
+```
+
 Currently, it applies to all managed clusters. You can customize it based on your needs.
 
 **Notes**:
