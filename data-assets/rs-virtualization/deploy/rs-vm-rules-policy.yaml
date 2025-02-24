@@ -24,7 +24,7 @@ spec:
                 apiVersion: monitoring.coreos.com/v1
                 kind: PrometheusRule
                 metadata:
-                  name: acm-right-sizing-rules
+                  name: acm-vm-right-sizing-rules
                   namespace: openshift-monitoring
                 spec:
                   groups:
