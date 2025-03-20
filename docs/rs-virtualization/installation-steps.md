@@ -2,6 +2,8 @@
 
 - Openshift Cluster (tested with 4.15.13+ version)
 - The Advanced Cluster Management operator should be installed on the hub cluster to facilitate cluster administration and data aggregation (tested with 2.10.4+ version).
+- OpenShift Virtualization operator (4.17.6+ version).
+  **Note**: If using OpenShift Virtualization operator (4.17.5 version), VM should be created via template, VM created with instance type is not reporting resource request parameters. [Issue link](https://github.com/kubevirt/kubevirt/pull/14069).
 - [MCO](https://github.com/stolostron/multicluster-observability-operator/) should be installed into the hub cluster with latest version. 
 - `oc` CLI should be installed and configured to interact with Openshift cluster
 
