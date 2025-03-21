@@ -22,6 +22,17 @@ This Document described how you can interact with grafana dashboards.
 
     ![Table](../../data-assets/rs-virtualization/images/vm_mem_table.png)
 
+    **Note** : Minimum CPU request is 1 CPU and Minimum Memory request is 1GB.
+
+    * If CPU request is 1 CPU core and utilization is less than 1 core, then we can not say it is Overestimated as minimum CPU request is 1 CPU.
+
+    * If Memory request is 1 GB and utilization is less than 1 GB, then we can not say it is Overestimated as minimum Memory request is 1 GB.
+
+    * CPU/Memory Recommendation is less than CPU/Memory Request then the resources are Overestimated and requires less resources than requested.
+    
+    * CPU/Memory Recommendation is greater than CPU/Memory Request then the resources are Underestimated and requires more resources than requested.
+
+
 6. Click on the Column Header to sort values of particular columns.
 
 7. Click on the Namespace Filter Icon in the Column Header to filter values based on user need.
