@@ -33,7 +33,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 39,
+      "id": 61,
       "links": [],
       "panels": [
         {
@@ -194,6 +194,7 @@ data:
                   "mode": "off"
                 }
               },
+              "decimals": 2,
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -208,7 +209,7 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -247,7 +248,7 @@ data:
               "refId": "A"
             }
           ],
-          "title": "CPU Usage of Top Underutilized Namespaces",
+          "title": "CPU Utilization of Top Namespaces",
           "type": "timeseries"
         },
         {
@@ -610,10 +611,6 @@ data:
                     "value": "short"
                   },
                   {
-                    "id": "decimals",
-                    "value": 2
-                  },
-                  {
                     "id": "custom.width",
                     "value": 400
                   },
@@ -712,6 +709,10 @@ data:
                   {
                     "id": "displayName",
                     "value": "CPU Request Hard"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
                   }
                 ]
               }
@@ -1067,6 +1068,7 @@ data:
                   "mode": "off"
                 }
               },
+              "decimals": 2,
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1081,7 +1083,7 @@ data:
                   }
                 ]
               },
-              "unit": "bytes"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -1120,7 +1122,7 @@ data:
               "refId": "A"
             }
           ],
-          "title": "Memory Usage for Top Underutilized Namespaces",
+          "title": "Memory Utilization of Top Namespaces",
           "type": "timeseries"
         },
         {
@@ -1472,10 +1474,6 @@ data:
                     "value": "short"
                   },
                   {
-                    "id": "decimals",
-                    "value": 2
-                  },
-                  {
                     "id": "custom.width",
                     "value": 400
                   },
@@ -1796,7 +1794,7 @@ data:
           },
           {
             "current": {
-              "selected": true,
+              "selected": false,
               "text": "local-cluster",
               "value": "local-cluster"
             },
@@ -1911,6 +1909,6 @@ data:
       "timezone": "",
       "title": "ACM Right-Sizing Namespace",
       "uid": "bnqQIPySE",
-      "version": 3,
+      "version": 12,
       "weekStart": ""
     }
