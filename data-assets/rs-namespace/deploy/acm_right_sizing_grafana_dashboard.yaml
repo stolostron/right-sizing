@@ -33,7 +33,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 61,
+      "id": 58,
       "links": [],
       "panels": [
         {
@@ -641,6 +641,32 @@ data:
                   {
                     "id": "custom.align",
                     "value": "left"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 0,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               },
@@ -665,6 +691,32 @@ data:
                   {
                     "id": "custom.align",
                     "value": "left"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 0,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               },
@@ -689,6 +741,32 @@ data:
                   {
                     "id": "custom.align",
                     "value": "left"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 0,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               },
@@ -739,7 +817,7 @@ data:
             "sortBy": [
               {
                 "desc": false,
-                "displayName": "CPU Utilization %"
+                "displayName": "Namespace"
               }
             ]
           },
@@ -1504,6 +1582,32 @@ data:
                   {
                     "id": "custom.align",
                     "value": "left"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 0,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               },
@@ -1528,6 +1632,32 @@ data:
                   {
                     "id": "custom.align",
                     "value": "left"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 0,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               },
@@ -1552,6 +1682,32 @@ data:
                   {
                     "id": "custom.align",
                     "value": "left"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 0,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               },
@@ -1909,6 +2065,6 @@ data:
       "timezone": "",
       "title": "ACM Right-Sizing Namespace",
       "uid": "bnqQIPySE",
-      "version": 12,
+      "version": 4,
       "weekStart": ""
     }
