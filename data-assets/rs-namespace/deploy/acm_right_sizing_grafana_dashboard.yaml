@@ -816,7 +816,7 @@ data:
             "showHeader": true,
             "sortBy": [
               {
-                "desc": true,
+                "desc": false,
                 "displayName": "CPU Utilization %"
               }
             ]
@@ -2065,6 +2065,6 @@ data:
       "timezone": "",
       "title": "ACM Right-Sizing Namespace",
       "uid": "bnqQIPySE",
-      "version": 6,
+      "version": 7,
       "weekStart": ""
     }
