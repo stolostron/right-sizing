@@ -33,7 +33,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 58,
+      "id": 24,
       "links": [],
       "panels": [
         {
@@ -791,6 +791,32 @@ data:
                   {
                     "id": "decimals",
                     "value": 2
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 0,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               }
@@ -816,7 +842,7 @@ data:
             "showHeader": true,
             "sortBy": [
               {
-                "desc": false,
+                "desc": true,
                 "displayName": "CPU Utilization %"
               }
             ]
@@ -886,7 +912,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "max_over_time(sum by (namespace) (acm_rs:namespace:cpu_request_hard{profile=\"$profile\"})[$days:])",
+              "expr": "max_over_time(sum by (namespace) (acm_rs:namespace:cpu_request_hard{cluster=\"$cluster\", profile=\"$profile\"})[$days:])",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -1728,6 +1754,36 @@ data:
                   {
                     "id": "decimals",
                     "value": 2
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1e-8,
+                          "result": {
+                            "index": 1,
+                            "text": "0.01"
+                          },
+                          "to": 0.00999999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 2,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
                   }
                 ]
               }
@@ -1926,7 +1982,6 @@ data:
           "type": "table"
         }
       ],
-      "refresh": false,
       "schemaVersion": 39,
       "tags": [],
       "templating": {
@@ -2058,13 +2113,13 @@ data:
         ]
       },
       "time": {
-        "from": "now-15m",
+        "from": "now-30m",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "",
       "title": "ACM Right-Sizing Namespace",
       "uid": "bnqQIPySE",
-      "version": 7,
+      "version": 5,
       "weekStart": ""
     }
