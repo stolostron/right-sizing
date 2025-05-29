@@ -946,60 +946,6 @@ data:
               }
             },
             {
-              "id": "filterByValue",
-              "options": {
-                "filters": [
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-mem-usage"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-mem-usage-1"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-mem-usage-2"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-cpu-usage-1"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-cpu-usage-2"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  }
-                ],
-                "match": "any",
-                "type": "exclude"
-              }
-            },
-            {
               "id": "sortBy",
               "options": {
                 "fields": {},
@@ -1913,60 +1859,6 @@ data:
               }
             },
             {
-              "id": "filterByValue",
-              "options": {
-                "filters": [
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-cpu-usage-2"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-cpu-usage-1"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-mem-usage-2"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-mem-usage-1"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "test-mem-usage"
-                      }
-                    },
-                    "fieldName": "namespace"
-                  }
-                ],
-                "match": "any",
-                "type": "exclude"
-              }
-            },
-            {
               "id": "sortBy",
               "options": {
                 "fields": {},
@@ -2120,6 +2012,6 @@ data:
       "timezone": "",
       "title": "ACM Right-Sizing Namespace",
       "uid": "bnqQIPySE",
-      "version": 5,
+      "version": 6,
       "weekStart": ""
     }
