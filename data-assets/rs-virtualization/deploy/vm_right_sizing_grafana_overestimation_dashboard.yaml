@@ -12,7 +12,10 @@ data:
         "list": [
           {
             "builtIn": 1,
-            "datasource": "-- Grafana --",
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
             "enable": true,
             "hide": true,
             "iconColor": "rgba(0, 211, 255, 1)",
@@ -28,10 +31,9 @@ data:
         ]
       },
       "editable": true,
-      "gnetId": null,
+      "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 118,
-      "iteration": 1739733832653,
+      "id": 120,
       "links": [
         {
           "asDropdown": false,
@@ -49,7 +51,10 @@ data:
       "panels": [
         {
           "collapsed": false,
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "gridPos": {
             "h": 1,
             "w": 24,
@@ -58,11 +63,22 @@ data:
           },
           "id": 16,
           "panels": [],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "refId": "A"
+            }
+          ],
           "title": "CPU",
           "type": "row"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Overestimated CPU Cores\nCPU cores you can save and not being utilized",
           "fieldConfig": {
             "defaults": {
@@ -112,6 +128,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "last"
@@ -119,12 +136,17 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "floor(max_over_time(acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])-\nmax_over_time(acm_rs_vm:namespace:cpu_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:]))",
               "hide": false,
@@ -134,53 +156,95 @@ data:
             }
           ],
           "title": "CPU Overestimation",
-          "transformations": [],
           "type": "stat"
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "description": "",
-          "fill": 4,
-          "fillGradient": 0,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 40,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
           "gridPos": {
             "h": 12,
             "w": 18,
             "x": 5,
             "y": 1
           },
-          "hiddenSeries": false,
           "id": 12,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "connected",
           "options": {
-            "alertThreshold": true
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
           },
-          "percentage": false,
           "pluginVersion": "8.5.20",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
               "exemplar": true,
               "expr": "(\n  acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n  / \n  acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n)",
               "format": "time_series",
@@ -190,56 +254,18 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "CPU Utilization(%) VM Name (Namespace)",
-          "tooltip": {
-            "shared": false,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transformations": [],
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:252",
-              "format": "percentunit",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:253",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "#ffffff",
+                "fixedColor": "#808080",
                 "mode": "fixed"
               },
               "mappings": [
@@ -280,6 +306,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -287,12 +314,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])",
               "instant": false,
@@ -315,11 +348,14 @@ data:
           "type": "stat"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "#ffffff",
+                "fixedColor": "#808080",
                 "mode": "fixed"
               },
               "mappings": [
@@ -360,6 +396,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -367,12 +404,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])",
               "instant": false,
@@ -395,11 +438,13 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "#ffffff",
+                "fixedColor": "#808080",
                 "mode": "fixed"
               },
               "mappings": [
@@ -445,6 +490,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -452,12 +498,17 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:]) / max_over_time(acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])",
               "interval": "",
@@ -480,7 +531,10 @@ data:
         },
         {
           "collapsed": false,
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "gridPos": {
             "h": 1,
             "w": 24,
@@ -489,11 +543,23 @@ data:
           },
           "id": 8,
           "panels": [],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "refId": "A"
+            }
+          ],
           "title": "Memory",
           "type": "row"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "description": "Overestimated Memory\nMemory you can save and not being utilized",
           "fieldConfig": {
             "defaults": {
@@ -542,6 +608,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -549,12 +616,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
               "exemplar": true,
               "expr": "floor((max_over_time(acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824) -\n(max_over_time(acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824))",
               "instant": false,
@@ -577,47 +650,91 @@ data:
           "type": "stat"
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": null,
-          "fill": 4,
-          "fillGradient": 0,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 40,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
           "gridPos": {
             "h": 12,
             "w": 18,
             "x": 5,
             "y": 14
           },
-          "hiddenSeries": false,
           "id": 24,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "connected",
           "options": {
-            "alertThreshold": true
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
           },
-          "percentage": false,
           "pluginVersion": "8.5.20",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
               "exemplar": true,
               "expr": "(\n  acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n  / \n  acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n)",
               "format": "time_series",
@@ -627,56 +744,18 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Memory Utilization(%) - VM Name (Namespace)",
-          "tooltip": {
-            "shared": false,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transformations": [],
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:252",
-              "format": "percentunit",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:253",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "#f9fcfb",
+                "fixedColor": "#808080",
                 "mode": "fixed"
               },
               "mappings": [
@@ -717,6 +796,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -724,12 +804,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824",
               "instant": true,
@@ -752,11 +838,14 @@ data:
           "type": "stat"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "#f9fcfb",
+                "fixedColor": "#808080",
                 "mode": "fixed"
               },
               "mappings": [
@@ -797,6 +886,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -804,12 +894,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824",
               "instant": true,
@@ -832,11 +928,13 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "#ffffff",
+                "fixedColor": "#808080",
                 "mode": "fixed"
               },
               "mappings": [],
@@ -871,6 +969,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -878,12 +977,17 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:]) / max_over_time(acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])",
               "instant": true,
@@ -907,8 +1011,7 @@ data:
         }
       ],
       "refresh": false,
-      "schemaVersion": 30,
-      "style": "dark",
+      "schemaVersion": 39,
       "tags": [],
       "templating": {
         "list": [
@@ -916,13 +1019,10 @@ data:
             "current": {
               "selected": false,
               "text": "Observatorium",
-              "value": "Observatorium"
+              "value": "000000001"
             },
-            "description": null,
-            "error": null,
             "hide": 2,
             "includeAll": false,
-            "label": null,
             "multi": false,
             "name": "datasource",
             "options": [],
@@ -933,16 +1033,16 @@ data:
             "type": "datasource"
           },
           {
-            "allValue": null,
             "current": {
               "selected": false,
               "text": "bleeding",
               "value": "bleeding"
             },
-            "datasource": null,
+            "datasource": {
+              "type": "prometheus",
+              "uid": "000000001"
+            },
             "definition": "label_values(acm_rs_vm:cluster:cpu_request,cluster)",
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Cluster",
@@ -960,16 +1060,16 @@ data:
             "type": "query"
           },
           {
-            "allValue": null,
             "current": {
               "selected": false,
               "text": "Max OverAll",
               "value": "Max OverAll"
             },
-            "datasource": "${datasource}",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
             "definition": "label_values(acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\"},profile)",
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Profile",
@@ -987,14 +1087,11 @@ data:
             "type": "query"
           },
           {
-            "allValue": null,
             "current": {
               "selected": false,
               "text": "15d",
               "value": "15d"
             },
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Aggregation",
@@ -1002,7 +1099,7 @@ data:
             "name": "days",
             "options": [
               {
-                "selected": true,
+                "selected": false,
                 "text": "1d",
                 "value": "1d"
               },
@@ -1022,6 +1119,11 @@ data:
                 "value": "10d"
               },
               {
+                "selected": true,
+                "text": "15d",
+                "value": "15d"
+              },
+              {
                 "selected": false,
                 "text": "30d",
                 "value": "30d"
@@ -1037,7 +1139,7 @@ data:
                 "value": "90d"
               }
             ],
-            "query": "1d, 2d, 5d, 10d, 30d, 60d, 90d",
+            "query": "1d, 2d, 5d, 10d, 15d, 30d, 60d, 90d",
             "queryValue": "",
             "skipUrlSync": false,
             "type": "custom"
@@ -1049,10 +1151,11 @@ data:
               "text": "matan-test",
               "value": "matan-test"
             },
-            "datasource": "${datasource}",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
             "definition": "label_values(acm_rs_vm:namespace:cpu_request,namespace)",
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Namespace",
@@ -1070,16 +1173,16 @@ data:
             "type": "query"
           },
           {
-            "allValue": null,
             "current": {
               "selected": false,
               "text": "centos-stream9-red-goat-52",
               "value": "centos-stream9-red-goat-52"
             },
-            "datasource": null,
+            "datasource": {
+              "type": "prometheus",
+              "uid": "000000001"
+            },
             "definition": "label_values(acm_rs_vm:namespace:cpu_request{namespace=\"$namespace\"}, name)",
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "VM",
@@ -1106,5 +1209,6 @@ data:
       "timezone": "",
       "title": "ACM Right Sizing Openshift Virtualization VM Dashboard Overestimation",
       "uid": "bnqQIPySEProdkhgafkdekgfOver",
-      "version": 5
+      "version": 1,
+      "weekStart": ""
     }
