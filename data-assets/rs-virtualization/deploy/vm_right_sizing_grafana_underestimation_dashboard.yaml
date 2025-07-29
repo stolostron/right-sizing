@@ -1089,8 +1089,8 @@ data:
           {
             "current": {
               "selected": false,
-              "text": "30d",
-              "value": "30d"
+              "text": "15d",
+              "value": "15d"
             },
             "hide": 0,
             "includeAll": false,
@@ -1120,6 +1120,11 @@ data:
               },
               {
                 "selected": true,
+                "text": "15d",
+                "value": "15d"
+              },
+              {
+                "selected": false,
                 "text": "30d",
                 "value": "30d"
               },
@@ -1134,7 +1139,7 @@ data:
                 "value": "90d"
               }
             ],
-            "query": "1d, 2d, 5d, 10d, 30d, 60d, 90d",
+            "query": "1d, 2d, 5d, 10d, 15d, 30d, 60d, 90d",
             "queryValue": "",
             "skipUrlSync": false,
             "type": "custom"
