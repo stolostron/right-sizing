@@ -326,7 +326,7 @@ data:
           "collapsed": false,
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "gridPos": {
             "h": 1,
@@ -340,7 +340,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "refId": "A"
             }
@@ -1563,7 +1563,7 @@ data:
           "collapsed": false,
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "gridPos": {
             "h": 1,
@@ -1577,7 +1577,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "refId": "A"
             }
@@ -2646,7 +2646,7 @@ data:
           },
           {
             "current": {
-              "selected": false,
+              "selected": true,
               "text": "bleeding",
               "value": "bleeding"
             },
@@ -2700,9 +2700,9 @@ data:
           },
           {
             "current": {
-              "selected": true,
-              "text": "15d",
-              "value": "15d"
+              "selected": false,
+              "text": "30d",
+              "value": "30d"
             },
             "hide": 0,
             "includeAll": false,
@@ -2731,12 +2731,12 @@ data:
                 "value": "10d"
               },
               {
-                "selected": true,
+                "selected": false,
                 "text": "15d",
                 "value": "15d"
               },
               {
-                "selected": false,
+                "selected": true,
                 "text": "30d",
                 "value": "30d"
               },

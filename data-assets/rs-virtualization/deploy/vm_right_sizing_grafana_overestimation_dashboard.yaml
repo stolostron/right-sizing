@@ -53,7 +53,7 @@ data:
           "collapsed": false,
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "gridPos": {
             "h": 1,
@@ -67,7 +67,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "refId": "A"
             }
@@ -528,7 +528,7 @@ data:
           "collapsed": false,
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "gridPos": {
             "h": 1,
@@ -542,7 +542,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "refId": "A"
             }
