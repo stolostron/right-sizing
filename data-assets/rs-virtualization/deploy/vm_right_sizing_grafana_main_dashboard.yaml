@@ -2731,12 +2731,12 @@ data:
                 "value": "10d"
               },
               {
-                "selected": false,
+                "selected": true,
                 "text": "15d",
                 "value": "15d"
               },
               {
-                "selected": true,
+                "selected": false,
                 "text": "30d",
                 "value": "30d"
               },
