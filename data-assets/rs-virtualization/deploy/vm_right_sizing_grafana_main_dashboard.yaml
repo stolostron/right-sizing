@@ -12,7 +12,10 @@ data:
         "list": [
           {
             "builtIn": 1,
-            "datasource": "-- Grafana --",
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
             "enable": true,
             "hide": true,
             "iconColor": "rgba(0, 211, 255, 1)",
@@ -28,14 +31,16 @@ data:
         ]
       },
       "editable": true,
-      "gnetId": null,
+      "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
       "id": 117,
-      "iteration": 1740032146145,
       "links": [],
       "panels": [
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -66,6 +71,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -73,12 +79,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "sum(floor((max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:])-\nmax_over_time(sum by (name) (acm_rs_vm:namespace:cpu_recommendation{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:])))>0)",
               "format": "table",
@@ -89,11 +101,13 @@ data:
             }
           ],
           "title": "Total CPU Overestimation",
-          "transformations": [],
           "type": "stat"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -130,6 +144,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "last"
@@ -137,12 +152,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "sum(floor((max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:])-\nmax_over_time(sum by (name) (acm_rs_vm:namespace:cpu_recommendation{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:])))<0) * (-1)",
               "format": "table",
@@ -156,7 +177,10 @@ data:
           "type": "stat"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -193,6 +217,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -200,12 +225,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "sum(floor((max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:]) / 1073741824)-\n(max_over_time(sum by (name) (acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:]) / 1073741824))>0)",
               "format": "table",
@@ -219,7 +250,10 @@ data:
           "type": "stat"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -256,6 +290,7 @@ data:
             "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "last"
@@ -263,12 +298,18 @@ data:
               "fields": "",
               "values": false
             },
+            "showPercentChange": false,
             "text": {},
-            "textMode": "auto"
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "sum(floor((max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:]) / 1073741824)-\n(max_over_time(sum by (name) (acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", namespace=~\"$namespace\"}\n+ on(cluster, namespace, name) group_left(_blah)(0 * max by (cluster, namespace, name) (kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0))\n)[$days:]) / 1073741824))<0) * (-1)",
               "format": "time_series",
@@ -283,7 +324,10 @@ data:
         },
         {
           "collapsed": false,
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "gridPos": {
             "h": 1,
             "w": 24,
@@ -292,11 +336,23 @@ data:
           },
           "id": 16,
           "panels": [],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "refId": "A"
+            }
+          ],
           "title": "CPU",
           "type": "row"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -304,8 +360,11 @@ data:
               },
               "custom": {
                 "align": "auto",
-                "displayMode": "auto",
-                "filterable": true
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
               },
               "mappings": [
                 {
@@ -558,8 +617,10 @@ data:
                     }
                   },
                   {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
                   },
                   {
                     "id": "noValue",
@@ -602,8 +663,7 @@ data:
                     "value": "NA"
                   },
                   {
-                    "id": "custom.width",
-                    "value": null
+                    "id": "custom.width"
                   }
                 ]
               },
@@ -693,6 +753,15 @@ data:
           },
           "id": 37,
           "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": [
               {
@@ -701,9 +770,13 @@ data:
               }
             ]
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "(max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]) / max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])) > 0",
               "format": "table",
@@ -713,6 +786,10 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]) ",
               "format": "table",
@@ -723,6 +800,10 @@ data:
               "refId": "B"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])",
               "format": "table",
@@ -733,6 +814,10 @@ data:
               "refId": "C"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "ceil(max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]))",
               "format": "table",
@@ -743,6 +828,10 @@ data:
               "refId": "D"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "label_join(\n  (\n    acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"} + on(name, namespace) acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"}\n  ),\n  \"name_namespace\", \"-\", \"name\", \"namespace\"\n)",
               "format": "table",
@@ -753,6 +842,10 @@ data:
               "refId": "E"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "floor(max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])-\nmax_over_time(sum by (name) (acm_rs_vm:namespace:cpu_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]))",
               "format": "table",
@@ -763,6 +856,10 @@ data:
               "refId": "F"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max by (name) ((kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0) * 1000)[$days:]",
               "format": "table",
@@ -860,7 +957,10 @@ data:
           "type": "table"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -868,8 +968,11 @@ data:
               },
               "custom": {
                 "align": "auto",
-                "displayMode": "auto",
-                "filterable": true
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
               },
               "mappings": [
                 {
@@ -1122,8 +1225,10 @@ data:
                     }
                   },
                   {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
                   },
                   {
                     "id": "noValue",
@@ -1253,6 +1358,15 @@ data:
           },
           "id": 43,
           "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": [
               {
@@ -1261,9 +1375,13 @@ data:
               }
             ]
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "(max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]) / max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])) > 0",
               "format": "table",
@@ -1273,6 +1391,10 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]) ",
               "format": "table",
@@ -1283,6 +1405,10 @@ data:
               "refId": "B"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])",
               "format": "table",
@@ -1293,6 +1419,10 @@ data:
               "refId": "C"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "ceil(max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]))",
               "format": "table",
@@ -1303,6 +1433,10 @@ data:
               "refId": "D"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "label_join(\n  (\n    acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"} + on(name, namespace) acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"}\n  ),\n  \"name_namespace\", \"-\", \"name\", \"namespace\"\n)",
               "format": "table",
@@ -1313,6 +1447,10 @@ data:
               "refId": "E"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "floor(max_over_time(sum by (name) (acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])-\nmax_over_time(sum by (name) (acm_rs_vm:namespace:cpu_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])) * (-1)",
               "format": "table",
@@ -1323,6 +1461,10 @@ data:
               "refId": "F"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max by (name) ((kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0) * 1000)[$days:]",
               "format": "table",
@@ -1419,7 +1561,10 @@ data:
         },
         {
           "collapsed": false,
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "gridPos": {
             "h": 1,
             "w": 24,
@@ -1428,11 +1573,23 @@ data:
           },
           "id": 8,
           "panels": [],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "refId": "A"
+            }
+          ],
           "title": "Memory",
           "type": "row"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1440,8 +1597,11 @@ data:
               },
               "custom": {
                 "align": "auto",
-                "displayMode": "auto",
-                "filterable": true
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
               },
               "mappings": [
                 {
@@ -1685,8 +1845,10 @@ data:
                     }
                   },
                   {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
                   }
                 ]
               },
@@ -1725,8 +1887,7 @@ data:
                 },
                 "properties": [
                   {
-                    "id": "custom.width",
-                    "value": null
+                    "id": "custom.width"
                   }
                 ]
               }
@@ -1740,6 +1901,15 @@ data:
           },
           "id": 36,
           "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": [
               {
@@ -1748,9 +1918,13 @@ data:
               }
             ]
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]) / max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])",
               "format": "table",
@@ -1760,6 +1934,10 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]) /1073741824",
               "format": "table",
@@ -1770,6 +1948,10 @@ data:
               "refId": "B"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])/1073741824",
               "format": "table",
@@ -1780,6 +1962,10 @@ data:
               "refId": "C"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "ceil(max_over_time(sum by (name) (acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])/ 1073741824)",
               "format": "table",
@@ -1790,6 +1976,10 @@ data:
               "refId": "D"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "label_join(\n  (\n    acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"} + on(name, namespace) acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"}\n  ),\n  \"name_namespace\", \"-\", \"name\", \"namespace\"\n)",
               "format": "table",
@@ -1800,6 +1990,10 @@ data:
               "refId": "E"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "floor((max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])) / 1073741824 -\n(max_over_time(sum by (name) (acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])) / 1073741824)",
               "format": "table",
@@ -1810,6 +2004,10 @@ data:
               "refId": "F"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max by (name) ((kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0) * 1000)[$days:]",
               "format": "table",
@@ -1902,7 +2100,10 @@ data:
           "type": "table"
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1910,8 +2111,11 @@ data:
               },
               "custom": {
                 "align": "auto",
-                "displayMode": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
                 "filterable": true,
+                "inspect": false,
                 "minWidth": 50
               },
               "mappings": [
@@ -2156,8 +2360,10 @@ data:
                     }
                   },
                   {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
                   }
                 ]
               },
@@ -2180,8 +2386,7 @@ data:
                 },
                 "properties": [
                   {
-                    "id": "custom.width",
-                    "value": null
+                    "id": "custom.width"
                   }
                 ]
               },
@@ -2223,12 +2428,25 @@ data:
           },
           "id": 44,
           "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.5.20",
+          "pluginVersion": "11.1.5",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:]) / max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])",
               "format": "table",
@@ -2238,6 +2456,10 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])/ 1073741824",
               "format": "table",
@@ -2248,6 +2470,10 @@ data:
               "refId": "B"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])/ 1073741824",
               "format": "table",
@@ -2258,6 +2484,10 @@ data:
               "refId": "C"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "ceil(max_over_time(sum by (name) (acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])/ 1073741824)",
               "format": "table",
@@ -2268,6 +2498,10 @@ data:
               "refId": "D"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "label_join(\n  (\n    acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"} + on(name, namespace) acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"}\n  ),\n  \"name_namespace\", \"-\", \"name\", \"namespace\"\n)",
               "format": "table",
@@ -2278,6 +2512,10 @@ data:
               "refId": "E"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "floor((max_over_time(sum by (name) (acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])) / 1073741824 -\n(max_over_time(sum by (name) (acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\"})[$days:])) / 1073741824)* (-1)",
               "format": "table",
@@ -2288,6 +2526,10 @@ data:
               "refId": "F"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "max by (name) ((kubevirt_vm_running_status_last_transition_timestamp_seconds{cluster=\"$cluster\", namespace=~\"$namespace\"} > 0) * 1000)[$days:]",
               "format": "table",
@@ -2381,8 +2623,7 @@ data:
         }
       ],
       "refresh": "",
-      "schemaVersion": 30,
-      "style": "dark",
+      "schemaVersion": 39,
       "tags": [],
       "templating": {
         "list": [
@@ -2390,13 +2631,10 @@ data:
             "current": {
               "selected": false,
               "text": "Observatorium",
-              "value": "Observatorium"
+              "value": "000000001"
             },
-            "description": null,
-            "error": null,
             "hide": 2,
             "includeAll": false,
-            "label": null,
             "multi": false,
             "name": "datasource",
             "options": [],
@@ -2407,16 +2645,16 @@ data:
             "type": "datasource"
           },
           {
-            "allValue": null,
             "current": {
               "selected": false,
               "text": "bleeding",
               "value": "bleeding"
             },
-            "datasource": null,
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
             "definition": "label_values(acm_rs_vm:cluster:cpu_request,cluster)",
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Cluster",
@@ -2434,16 +2672,16 @@ data:
             "type": "query"
           },
           {
-            "allValue": null,
             "current": {
               "selected": false,
               "text": "Max OverAll",
               "value": "Max OverAll"
             },
-            "datasource": "${datasource}",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
             "definition": "label_values(acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\"},profile)",
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Profile",
@@ -2461,14 +2699,11 @@ data:
             "type": "query"
           },
           {
-            "allValue": null,
             "current": {
               "selected": true,
               "text": "15d",
               "value": "15d"
             },
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Aggregation",
@@ -2524,7 +2759,7 @@ data:
           {
             "allValue": "",
             "current": {
-              "selected": true,
+              "selected": false,
               "text": [
                 "All"
               ],
@@ -2532,10 +2767,11 @@ data:
                 "$__all"
               ]
             },
-            "datasource": "${datasource}",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
             "definition": "label_values(acm_rs_vm:namespace:cpu_request,namespace)",
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": true,
             "label": "Namespace",
@@ -2564,5 +2800,6 @@ data:
       "timezone": "",
       "title": "ACM Right Sizing Openshift Virtualization Dashboard",
       "uid": "bnqQIPySEProdkhgafkOpenshiftVirt",
-      "version": 54
+      "version": 1,
+      "weekStart": ""
     }
