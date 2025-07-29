@@ -103,8 +103,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-green",
-                    "value": null
+                    "color": "dark-green"
                   },
                   {
                     "color": "semi-dark-yellow",
@@ -161,7 +160,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "description": "",
           "fieldConfig": {
@@ -206,8 +205,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -243,7 +241,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "exemplar": true,
               "expr": "(\n  acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n  / \n  acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n)",
@@ -260,7 +258,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -285,8 +283,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -324,7 +321,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:cpu_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])",
@@ -350,7 +347,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -375,8 +372,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -414,7 +410,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:cpu_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])",
@@ -465,8 +461,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#ffffff",
-                    "value": null
+                    "color": "#ffffff"
                   },
                   {
                     "color": "red",
@@ -558,7 +553,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "description": "Underestimated Memory\nMemory that needs more Memory resources",
           "fieldConfig": {
@@ -583,8 +578,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-orange",
-                    "value": null
+                    "color": "dark-orange"
                   },
                   {
                     "color": "semi-dark-yellow",
@@ -626,7 +620,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "exemplar": true,
               "expr": "floor((max_over_time(acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824) -\n(max_over_time(acm_rs_vm:namespace:memory_recommendation{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824))* (-1)",
@@ -652,7 +646,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -696,8 +690,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -733,7 +726,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "exemplar": true,
               "expr": "(\n  acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n  / \n  acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"} \n)",
@@ -750,7 +743,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -775,8 +768,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -814,7 +806,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:memory_usage{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824",
@@ -840,7 +832,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "000000001"
+            "uid": "${datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -865,8 +857,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -904,7 +895,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "000000001"
+                "uid": "${datasource}"
               },
               "exemplar": true,
               "expr": "max_over_time(acm_rs_vm:namespace:memory_request{cluster=\"$cluster\", profile=\"$profile\", namespace=~\"$namespace\", name=~\"$vm\"}[$days:])/ 1073741824",
@@ -944,8 +935,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#ffffff",
-                    "value": null
+                    "color": "#ffffff"
                   },
                   {
                     "color": "red",
