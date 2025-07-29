@@ -1030,7 +1030,7 @@ data:
             },
             "datasource": {
               "type": "prometheus",
-              "uid": "000000001"
+              "uid": "${datasource}"
             },
             "definition": "label_values(acm_rs_vm:cluster:cpu_request,cluster)",
             "hide": 0,
@@ -1170,7 +1170,7 @@ data:
             },
             "datasource": {
               "type": "prometheus",
-              "uid": "000000001"
+              "uid": "${datasource}"
             },
             "definition": "label_values(acm_rs_vm:namespace:cpu_request{namespace=\"$namespace\"}, name)",
             "hide": 0,

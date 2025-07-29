@@ -103,7 +103,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-green"
+                    "color": "dark-green",
+                    "value": null
                   },
                   {
                     "color": "semi-dark-yellow",
@@ -205,7 +206,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -283,7 +285,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -372,7 +375,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -461,7 +465,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#ffffff"
+                    "color": "#ffffff",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -578,7 +583,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-orange"
+                    "color": "dark-orange",
+                    "value": null
                   },
                   {
                     "color": "semi-dark-yellow",
@@ -690,7 +696,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -768,7 +775,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -857,7 +865,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -935,7 +944,8 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#ffffff"
+                    "color": "#ffffff",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -1030,7 +1040,7 @@ data:
             },
             "datasource": {
               "type": "prometheus",
-              "uid": "000000001"
+              "uid": "${datasource}"
             },
             "definition": "label_values(acm_rs_vm:cluster:cpu_request,cluster)",
             "hide": 0,
@@ -1170,7 +1180,7 @@ data:
             },
             "datasource": {
               "type": "prometheus",
-              "uid": "000000001"
+              "uid": "${datasource}"
             },
             "definition": "label_values(acm_rs_vm:namespace:cpu_request{namespace=\"$namespace\"}, name)",
             "hide": 0,
